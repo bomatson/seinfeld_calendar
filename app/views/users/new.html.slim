@@ -1,1 +1,4 @@
-p hi!
+= form_for @user do |f|
+  = f.label :github_username
+  = f.text_field :github_username
+  = f.submit :calendar_time

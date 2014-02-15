@@ -30,4 +30,20 @@ describe UsersController do
       end
     end
   end
+
+  describe 'GET show' do
+    let(:user) { create :user }
+
+    before do
+      get :show, id: user
+    end
+
+    it 'assigns the requested user' do
+      expect(assigns(:user)).to eq user
+    end
+
+    it 'assigns the requested user' do
+      expect(response).to render_template :show
+    end
+  end
 end
