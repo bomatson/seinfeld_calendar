@@ -11,4 +11,27 @@ describe User do
       end
     end
   end
+
+  describe 'validations' do
+    context 'required attributes' do
+      let(:user) { build :user }
+
+      context 'given a github username' do
+        before { user.valid? }
+
+        it 'is valid' do
+          expect(user).to be_valid
+        end
+      end
+
+      context 'given no github username' do
+        before { user.github_username = nil }
+        before { user.valid? }
+
+        it 'is not valid' do
+          expect(user.errors.keys).to include(:github_username)
+        end
+      end
+    end
+  end
 end

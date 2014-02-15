@@ -34,6 +34,7 @@ group :test, :development do
   gem 'jasminerice', github: 'bradphelan/jasminerice' # Latest release still depends on haml.
   #gem 'timecop'
   gem 'simplecov'
+  gem 'webmock'
   #gem 'cane'
   #gem 'morecane'
   #gem 'quiet_assets'
