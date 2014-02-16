@@ -16,7 +16,7 @@ gem 'coffee-rails'
 gem 'turbolinks'
 gem 'simple_form', '~> 3.0'
 gem 'uglifier'
-
+gem 'github_api'
 gem 'awesome_print'
 
 # Heroku suggests that these gems aren't necessary, but they're required to compile less assets on deploy.
@@ -24,6 +24,7 @@ gem 'therubyracer', platforms: :ruby
 #gem 'libv8'#, '~> 3.11.8'
 
 group :test, :development do
+  gem 'pry-rails'
   gem 'rspec-rails', '~> 3.0.0.beta1'
   gem 'capybara'
   #gem 'capybara-email'
@@ -34,10 +35,13 @@ group :test, :development do
   gem 'jasminerice', github: 'bradphelan/jasminerice' # Latest release still depends on haml.
   #gem 'timecop'
   gem 'simplecov'
-  gem 'webmock'
   #gem 'cane'
   #gem 'morecane'
   #gem 'quiet_assets'
+end
+
+group :test do
+  gem 'webmock'
 end
 
 group :development do
