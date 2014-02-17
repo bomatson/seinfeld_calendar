@@ -15,6 +15,9 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @tasks = @user.tasks
+    @tasks_by_date = @tasks.group_by(&:format_date)
+    @date = params[:date] ? Date.parse(params[:date]) : Date.today
   end
 
   private

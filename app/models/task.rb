@@ -3,6 +3,9 @@ class Task < ActiveRecord::Base
 
   validates_presence_of :user
 
+  def format_date
+    origin_date.to_date
+  end
   def completed?
 
 #    Github.ping(user.username)
