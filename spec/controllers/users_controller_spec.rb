@@ -42,7 +42,7 @@ describe UsersController do
       expect(assigns(:user)).to eq user
     end
 
-    it 'assigns the requested user' do
+    it 'renders the show template' do
       expect(response).to render_template :show
     end
   end
