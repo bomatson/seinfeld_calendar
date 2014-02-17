@@ -15,6 +15,8 @@ class Tracker
     if @user.tasks.present?
       latest_task = @user.tasks.order(updated_at: :desc).first
       latest_task.updated_at
+    else
+      30.days.ago
     end
   end
 
@@ -25,13 +27,11 @@ class Tracker
     return if repos_to_update.empty?
 
     commits = repos_to_update.map do |repo|
-      build_seinfeld_tasks_for(repo, github)
+      build_seinfeld_tasks_for repo, github
     end
   end
 
   def check_for_updates_on(repos)
-    return repos if @date.nil?
-
     updates = repos.select do |repo|
       repo.updated_at > @date
     end
@@ -43,12 +43,8 @@ class Tracker
 
     commits.each do |commit|
       commit_date = commit.commit.author.date
-      if commit.commit.message.include?('seinfeld')
-        if @date.present? && commit_date > @date
-          create_task_for(commit_date)
-        elsif @date.nil?
-          create_task_for(commit_date)
-        end
+      if commit.commit.message.include?('seinfeld') && (commit_date > @date)
+        create_task_for(commit_date)
       end
     end
   end
