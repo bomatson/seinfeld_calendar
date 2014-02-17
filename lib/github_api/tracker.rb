@@ -19,7 +19,7 @@ class Tracker
   end
 
   def fetch_commits_from(github)
-    repos = github.repos.list @user.github_username
+    repos = github.repos.list user: @user.github_username
 
     repos_to_update = check_for_updates_on repos
     return if repos_to_update.empty?
@@ -42,8 +42,8 @@ class Tracker
     commits = github.repos.commits.all @user.github_username, repo_name
 
     commits.each do |commit|
-      commit_date = commit.author.date
-      if commit.message.include?('seinfeld')
+      commit_date = commit.commit.author.date
+      if commit.commit.message.include?('seinfeld')
         if @date.present? && commit_date > @date
           create_task_for(commit_date)
         elsif @date.nil?

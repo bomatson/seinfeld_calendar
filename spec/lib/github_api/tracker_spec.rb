@@ -11,7 +11,7 @@ describe Tracker do
 
     before do
       stub_request(:get,
-                   "https://api.github.com/user/repos")
+                   "https://api.github.com/users/#{user.github_username}/repos")
       .to_return(status: 200, body: repos_with_commits.to_json)
 
       stub_request(:get,
@@ -48,11 +48,11 @@ describe Tracker do
 
         context 'given it has a single seinfeld commit' do
           let(:commits) {[
-            {author: { date: 3.days.ago }, message: 'something'},
+            {commit: {author: { date: 3.days.ago }, message: 'something'}},
             updated_commit,
           ]}
           let(:updated_commit) {
-            {author: { date: 1.hour.ago }, message: 'seinfeld'}
+            {commit: {author: { date: 1.hour.ago }, message: 'seinfeld'}}
           }
 
           it 'creates a 1 new task' do
@@ -62,11 +62,11 @@ describe Tracker do
 
         context 'given it has two seinfeld commits, but one old one' do
           let(:commits) {[
-            {author: { date: 3.days.ago }, message: 'seinfeld'},
+            {commit: {author: { date: 3.days.ago }, message: 'seinfeld'}},
             updated_commit,
           ]}
           let(:updated_commit) {
-            {author: { date: 1.hour.ago }, message: 'seinfeld'}
+            {commit: {author: { date: 1.hour.ago }, message: 'seinfeld'}}
           }
 
           it 'creates a 1 new task' do
@@ -76,11 +76,11 @@ describe Tracker do
 
         context 'given it has two seinfeld commits' do
           let(:commits) {[
-            {author: { date: 2.hours.ago }, message: 'seinfeld'},
+            {commit: {author: { date: 2.hours.ago }, message: 'seinfeld'}},
             updated_commit,
           ]}
           let(:updated_commit) {
-            {author: { date: 1.hour.ago }, message: 'seinfeld'}
+            {commit: {author: { date: 1.hour.ago }, message: 'seinfeld'}}
           }
 
           it 'creates two new tasks' do
@@ -118,11 +118,11 @@ describe Tracker do
 
         context 'but no seinfeld commits' do
           let(:commits) {[
-            {author: { date: 3.days.ago }, message: 'something'},
+            {commit: {author: { date: 3.days.ago }, message: 'something'}},
             updated_commit,
           ]}
           let(:updated_commit) {
-            {author: { date: 1.hour.ago }, message: 'something else'}
+            {commit: {author: { date: 1.hour.ago }, message: 'something else'}}
           }
 
           it 'does not create a new task' do
@@ -132,11 +132,11 @@ describe Tracker do
 
         context 'but 1 seinfeld commit' do
           let(:commits) {[
-            {author: { date: 3.days.ago }, message: 'something'},
+            {commit: {author: { date: 3.days.ago }, message: 'something'}},
             updated_commit,
           ]}
           let(:updated_commit) {
-            {author: { date: 1.hour.ago }, message: 'seinfeld'}
+            {commit: {author: { date: 1.hour.ago }, message: 'seinfeld'}}
           }
 
           it 'creates a new task' do
@@ -146,11 +146,11 @@ describe Tracker do
 
         context 'but mutiple seinfeld commits' do
           let(:commits) {[
-            {author: { date: 3.days.ago }, message: 'seinfeld'},
+            {commit: {author: { date: 3.days.ago }, message: 'seinfeld'}},
             updated_commit,
           ]}
           let(:updated_commit) {
-            {author: { date: 1.hour.ago }, message: 'seinfeld'}
+            {commit: {author: { date: 1.hour.ago }, message: 'seinfeld'}}
           }
 
           it 'creates multiple new tasks' do
