@@ -1,49 +1,59 @@
 class Tracker
   def initialize(user)
     @user = user
-    @date = lastest_modification
+    @date = latest_modification
   end
 
   def run!
     github = Github.new
-    repos = fetch_commits_for(github)
-    build_seinfeld_tasks_for(repos, @date)
-    #user.last_task_modified = DateTime.now
+    fetch_commits_from(github)
   end
 
   private
 
-  def lastest_modification
+  def latest_modification
     if @user.tasks.present?
       latest_task = @user.tasks.order(updated_at: :desc).first
       latest_task.updated_at
-    else
-      DateTime.now
     end
   end
 
-  def fetch_commits_for(github)
+  def fetch_commits_from(github)
     repos = github.repos.list @user.github_username
-    return if check_for_updates_on(repos).empty?
-    commits = repos.map do |repo|
 
+    repos_to_update = check_for_updates_on repos
+    return if repos_to_update.empty?
+
+    commits = repos_to_update.map do |repo|
+      build_seinfeld_tasks_for(repo, github)
     end
-
-  end
-
-  def build_seinfeld_tasks_for(repos, date)
-    repos.each do |repo|
-
-    end
-    #iterate over all repo commits
-    #create task for each date where a commit says seinfeld
   end
 
   def check_for_updates_on(repos)
-    binding.pry
-    repos.map(&:updated_at).select do |date|
-      date > @date
+    return repos if @date.nil?
+
+    updates = repos.select do |repo|
+      repo.updated_at > @date
     end
   end
 
+  def build_seinfeld_tasks_for(repo, github)
+    repo_name = repo[:name]
+    commits = github.repos.commits.all @user.github_username, repo_name
+
+    commits.each do |commit|
+      commit_date = commit.author.date
+      if commit.message.include?('seinfeld')
+        if @date.present? && commit_date > @date
+          create_task_for(commit_date)
+        elsif @date.nil?
+          create_task_for(commit_date)
+        end
+      end
+    end
+  end
+
+  def create_task_for(commit_date)
+    Task.create(origin_date: commit_date, user: @user)
+  end
 end
