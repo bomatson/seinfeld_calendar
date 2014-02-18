@@ -15,12 +15,22 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    build_calendar
+    check_for_new_tasks_for(@user)
+  end
+
+  private
+
+  def check_for_new_tasks_for(user)
+    tracker = Tracker.new(user)
+    tracker.run!
+  end
+
+  def build_calendar
     @tasks = @user.tasks
     @tasks_by_date = @tasks.group_by(&:format_date)
     @date = params[:date] ? Date.parse(params[:date]) : Date.today
   end
-
-  private
 
   def user_params
     params.require(:user).permit(:github_username)

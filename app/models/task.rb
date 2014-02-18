@@ -6,9 +6,4 @@ class Task < ActiveRecord::Base
   def format_date
     origin_date.to_date
   end
-  def completed?
-
-#    Github.ping(user.username)
-#   return true if
-  end
 end

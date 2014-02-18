@@ -1,4 +1,13 @@
-= form_for @user do |f|
-  = f.label :github_username
-  = f.text_field :github_username
-  = f.submit :calendar_time
+.jumbotron
+  h1 Don't Break the Chain
+  br
+  p Commit to finishing at least one thing each day
+  p Include 'seinfeld' in the commit message and add an 'X' to your new calendar
+
+  = form_for @user, html: {class: 'new_user form-inline', role: 'form'} do |f|
+    div.form-group
+      - f.label :github_username, class: 'sry-only'
+    div.form-group
+      = f.text_field :github_username, placeholder: 'Github Username', class: 'form-control'
+    div.form-group
+      = f.button :continue, class: 'btn btn-default'

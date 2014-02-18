@@ -1,6 +1,6 @@
 SeinfeldCalendar::Application.routes.draw do
 
-  root to: 'pages#root'
+  root to: 'users#new'
 
   resources :users
 
