@@ -7,8 +7,7 @@
   width: 100%;
 
   td, th {
-    font-family: "Lucida Grande", arial, helvetica, sans-serif;
-    font-size: 10px;
+    font-size: 12px;
     padding: 6px;
     border: 1px solid #999;
   }
@@ -32,15 +31,19 @@
    .today { background-color: #D7F2FF; }
 }
 
-#tasks #month {
-  margin: 0;
+#tasks {
+  h1 {
+    text-align: center;
+  }
+
+  h3 {
   padding-bottom: 10px;
   text-align: center;
-  font-size: 22px;
-  a {
-    text-decoration: none;
-    padding: 0 10px;
-    color: #999;
+    a {
+      text-decoration: none;
+      padding: 0 10px;
+      color: #999;
+    }
   }
 }
 

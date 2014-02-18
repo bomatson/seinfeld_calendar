@@ -1,5 +1,6 @@
 #tasks
-  h2#month
+  h1 #{@user.github_username}'s calendar
+  h3#month
     = link_to "<", date: @date.prev_month
     = @date.strftime("%B %Y")
     = link_to ">", date: @date.next_month
