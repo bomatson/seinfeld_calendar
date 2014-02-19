@@ -34,6 +34,7 @@ describe Task do
           expect(task.errors.keys).to include(:user)
         end
       end
+
     end
   end
 end

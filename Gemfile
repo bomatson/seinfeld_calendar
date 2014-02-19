@@ -33,6 +33,7 @@ group :test, :development do
   gem 'database_cleaner'
   gem 'fuubar'
   gem 'jasminerice', github: 'bradphelan/jasminerice' # Latest release still depends on haml.
+  gem 'faker'
   #gem 'timecop'
   gem 'simplecov'
   #gem 'cane'

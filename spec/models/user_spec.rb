@@ -33,5 +33,20 @@ describe User do
         end
       end
     end
+
+    context 'uniqueness' do
+      let(:user) { create :user, github_username: 'bomatson' }
+
+      context 'given a duplicate github username' do
+        let(:duplicate) { build :user, github_username: 'bomatson' }
+
+        before { expect(user).to be }
+        before { duplicate.valid? }
+
+        it 'is invalid' do
+          expect(duplicate.errors.keys).to include(:github_username)
+        end
+      end
+    end
   end
 end

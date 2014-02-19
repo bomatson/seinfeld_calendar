@@ -35,6 +35,10 @@ describe UsersController do
     let(:user) { create :user }
 
     before do
+      tracker = double
+      expect(tracker).to receive(:run!)
+      expect(Tracker).to receive(:new).with(user).and_return(tracker)
+
       get :show, id: user
     end
 

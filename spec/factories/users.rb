@@ -2,6 +2,6 @@
 
 FactoryGirl.define do
   factory :user do
-    github_username 'bomatson'
+    sequence(:github_username) { |n| "#{Faker::Internet.user_name}_#{n}" }
   end
 end
